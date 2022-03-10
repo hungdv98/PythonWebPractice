@@ -1,6 +1,7 @@
 from flask_restx import Namespace, Resource, fields
 from models import Note 
 from flask import request 
+from flask_jwt_extended import jwt_required
 
 note_ns = Namespace("note", description = "A namespace for Notes")
 
@@ -25,6 +26,7 @@ class NotesResource(Resource):
 
     @note_ns.marshal_with(note_model)
     @note_ns.expect(note_model)
+    @jwt_required()
     def post(self):
         """Create a note"""
         data = request.get_json()
@@ -49,6 +51,7 @@ class NoteResource(Resource):
         return note 
 
     @note_ns.marshal_with(note_model)
+    @jwt_required()
     def put(self, id):
         """Update a note by id"""
         note_to_update = Note.query.get_or_404(id)
@@ -62,6 +65,7 @@ class NoteResource(Resource):
         return note_to_update
 
     @note_ns.marshal_with(note_model)
+    @jwt_required()
     def delete(self, id):
         """Delete a note by id"""
         note_to_delete = Note.query.get_or_404(id)
