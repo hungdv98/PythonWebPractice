@@ -40,14 +40,31 @@ class NotesResource(Resource):
 
 @note_ns.route("/note/<int:id>")
 class NoteResource(Resource):
+
+    @note_ns.marshal_with(note_model)
     def get(self, id):
         """Get a note by id"""
-        pass 
+        note = Note.query.get_or_404(id)
 
+        return note 
+
+    @note_ns.marshal_with(note_model)
     def put(self, id):
         """Update a note by id"""
-        pass 
+        note_to_update = Note.query.get_or_404(id)
+        data = request.get_json()
 
+        note_to_update.update(
+            data.get("title"),
+            data.get("description")
+        )
+
+        return note_to_update
+
+    @note_ns.marshal_with(note_model)
     def delete(self, id):
         """Delete a note by id"""
-        pass 
+        note_to_delete = Note.query.get_or_404(id)
+        note_to_delete.delete()
+
+        return note_to_delete 
