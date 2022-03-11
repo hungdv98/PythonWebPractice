@@ -1,17 +1,44 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './styles/main.css';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import NavBar from './components/Navbar';
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route
+} from 'react-router-dom';
+import HomePage from './components/Home';
+import SignUpPage from './components/SignUp';
+import LoginPage from './components/Login';
+import CreateNotePage from './components/CreateNote';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+
+const App=()=>{
+
+    
+    return (
+        <Router>
+        <div className="">
+            <NavBar />
+            <Switch>
+                <Route path="/create_note">
+                    <CreateNotePage />
+                </Route>
+                <Route path="/login">
+                    <LoginPage />
+                </Route>
+                <Route path="/signup">
+                    <SignUpPage />
+                </Route>
+                <Route path="/">
+                    <HomePage />
+                </Route>
+            </Switch>
+        </div>
+        </Router>
+    )
+}
+
+ReactDOM.render(<App/>,document.getElementById("root"));
