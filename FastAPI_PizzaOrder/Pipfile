@@ -9,6 +9,8 @@ fastapi = "*"
 sqlalchemy = "*"
 psycopg2-binary = "*"
 sqlalchemy-utils = "*"
+fastapi-jwt-auth = "*"
+werkzeug = "*"
 
 [dev-packages]
 
