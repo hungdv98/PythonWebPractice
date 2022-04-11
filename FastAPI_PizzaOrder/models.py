@@ -1,6 +1,3 @@
-from ast import Or
-from email.policy import default
-from random import choices
 from database import Base
 from sqlalchemy import Column, Integer, Boolean, Text, String, ForeignKey
 from sqlalchemy.orm import relationship
