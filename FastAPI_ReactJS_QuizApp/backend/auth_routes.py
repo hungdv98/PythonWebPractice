@@ -14,6 +14,13 @@ auth_router = APIRouter(
 
 session = Session(bind = engine)
 
+@auth_router.get("/noauthen")
+async def hi():
+    """
+        ## Hi without authentication
+    """
+    return {"message":"HI THERE!"}
+
 @auth_router.get("/hello")
 async def hello(Authorize:AuthJWT = Depends()):
     """
