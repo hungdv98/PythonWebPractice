@@ -14,7 +14,7 @@ auth_router = APIRouter(
 
 session = Session(bind = engine)
 
-@auth_router.get("/")
+@auth_router.get("/hello")
 async def hello(Authorize:AuthJWT = Depends()):
     """
         ## Hello World route
@@ -32,7 +32,7 @@ async def hello(Authorize:AuthJWT = Depends()):
 @auth_router.post("/signup",
     status_code = status.HTTP_201_CREATED
 )
-async def signup(Ruler:SignUpModel):
+async def signup(ruler:SignUpModel):
     """
         ## Create a Ruler
         This requires the following 
@@ -40,18 +40,17 @@ async def signup(Ruler:SignUpModel):
             rulername:str
             email:str
             password:str
-            is_staff:bool
             is_active:bool
         ```
     """
-    db_email = session.query(Ruler).filter(Ruler.email == Ruler.email).first()
+    db_email = session.query(Ruler).filter(Ruler.email == ruler.email).first()
 
     if db_email is not None:
         return HTTPException(status_code = status.HTTP_400_BAD_REQUEST,
             detail = "Ruler with the email already exists"
         )
     
-    db_rulername = session.query(Ruler).filter(Ruler.rulername == Ruler.rulername).first()
+    db_rulername = session.query(Ruler).filter(Ruler.rulername == ruler.rulername).first()
 
     if db_rulername is not None:
         return HTTPException(status_code = status.HTTP_400_BAD_REQUEST,
@@ -59,11 +58,10 @@ async def signup(Ruler:SignUpModel):
         )
     
     new_Ruler = Ruler(
-        rulername = Ruler.rulername,
-        email = Ruler.email,
-        password = generate_password_hash(Ruler.password),
-        is_active = Ruler.is_active,
-        is_staff = Ruler.is_staff
+        rulername = ruler.rulername,
+        email = ruler.email,
+        password = generate_password_hash(ruler.password),
+        is_active = ruler.is_active,
     )
 
     session.add(new_Ruler)
@@ -73,19 +71,19 @@ async def signup(Ruler:SignUpModel):
 
 #Login route
 @auth_router.post("/login", status_code = 200)
-async def login(Ruler:LoginModel, Authorize:AuthJWT=Depends()):
+async def login(ruler:LoginModel, Authorize:AuthJWT=Depends()):
     """
         ## Login a Ruler
         This requires
             ```
-                rulername:str
+                email:str
                 password:str
             ```
         and returns a token pair `access` and `refresh`
     """
-    db_ruler = session.query(Ruler).filter(Ruler.rulername == Ruler.rulername).first()
+    db_ruler = session.query(Ruler).filter(Ruler.email == ruler.email).first()
 
-    if db_ruler and check_password_hash(db_ruler.password, Ruler.password):
+    if db_ruler and check_password_hash(db_ruler.password, ruler.password):
         access_token = Authorize.create_access_token(subject = db_ruler.rulername)
         refresh_token = Authorize.create_refresh_token(subject = db_ruler.rulername)
 
@@ -97,7 +95,7 @@ async def login(Ruler:LoginModel, Authorize:AuthJWT=Depends()):
         return jsonable_encoder(response)
     
     raise HTTPException(status_code = status.HTTP_400_BAD_REQUEST,
-        detail = "Invalid Rulername or Password"
+        detail = "Invalid Email or Password"
     )
 
 #Refresh token

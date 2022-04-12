@@ -23,5 +23,8 @@ class Settings(BaseModel):
     authjwt_secret_key:str = '87b9b87947910d7165d85188b23ac363b3ab31c3d7f9a3b98db700555d562cb0'
 
 class LoginModel(BaseModel):
-    username:str
+    email:str
     password:str
+
+class UniModel(BaseModel):
+    uniname:str
