@@ -4,13 +4,26 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-uvicorn = "*"
-fastapi = "*"
-sqlalchemy = "*"
-psycopg2-binary = "*"
-sqlalchemy-utils = "*"
-fastapi-jwt-auth = "*"
-werkzeug = "*"
+uvicorn = "==0.17.6"
+fastapi = "==0.75.0"
+psycopg2-binary = "==2.9.3"
+fastapi-jwt-auth = "==0.5.0"
+anyio = "==3.5.0"
+asgiref = "==3.5.0"
+click = "==8.0.4"
+colorama = "==0.4.4"
+greenlet = "==1.1.2"
+h11 = "==0.13.0"
+idna = "==3.3"
+pydantic = "==1.9.0"
+six = "==1.16.0"
+sniffio = "==1.2.0"
+starlette = "==0.17.1"
+typing-extensions = "==4.1.1"
+SQLAlchemy = "==1.4.32"
+SQLAlchemy-Utils = "==0.38.2"
+Werkzeug = "==2.0.3"
+PyJWT = "==1.7.1"
 
 [dev-packages]
 

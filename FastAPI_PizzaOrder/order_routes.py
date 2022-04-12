@@ -1,4 +1,3 @@
-from email.policy import HTTP
 from urllib import response
 from fastapi import APIRouter, Depends, status
 from fastapi.exceptions import HTTPException
