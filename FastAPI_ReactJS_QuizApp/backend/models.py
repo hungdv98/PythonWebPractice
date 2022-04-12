@@ -1,5 +1,5 @@
 from database import Base
-from sqlalchemy import Column, Integer, Boolean, Text, String
+from sqlalchemy import Column, Integer, Boolean, Text, String, ForeignKey
 from sqlalchemy.orm import relationship
 
 """
@@ -9,7 +9,6 @@ from sqlalchemy.orm import relationship
         email:str
         password:str
         is_active:boolean
-        exams:relationship
 """
 
 class Ruler(Base):
@@ -17,12 +16,8 @@ class Ruler(Base):
     id = Column(Integer(), primary_key = True)
     rulername = Column(String(25), unique = True)
     email = Column(String(80), unique = True)
-    password = Column(Text(), nullable = True)
+    password = Column(Text(), nullable = False)
     is_active = Column(Boolean(), default = False)
-    #exams = relationship("Exam", back_populates = "ruler")
-
-    def __repr__(self):
-        return f"<Ruler {self.rulername}>"
 
 """
     class Uni:
@@ -36,13 +31,13 @@ class Uni(Base):
     id = Column(Integer(), primary_key = True)
     uniname = Column(String(80), unique = True)
     is_active = Column(Boolean(), default = True)
-
+   
     def __repr__(self):
         return f"<Uni {self.uniname}>"
 
 """
     class Major:
-        
+
 """
 
 """
@@ -65,18 +60,54 @@ class User(Base):
     major = Column(String(80))
     email = Column(String(80), unique = True)
     phonenumb = Column(String(25), unique = True)
-    count = Column(Integer())
-    score = Column(Integer())
+    count = Column(Integer(), default = 0)
+    score = Column(Integer(), default = 0)
 
     def __repr__(self):
         return f"<User {self.mssv}>"
 
 """
     class Exam:
+        id: int primary key
+        exam_name: str
+        ruler_id: relationship
+        uni_id: relationship
 
 """
+class Exam(Base):
+    __tablename__ = "exam"
+    id = Column(Integer(), primary_key = True)
+    exam_name = Column(String(25), unique = True, nullable = False)
+    ruler_id = Column(Integer(), ForeignKey("ruler.id"))
+    uni_id = Column(Integer(), ForeignKey("uni.id"))
+
+    def __repr__(self):
+        return f"<Exam {self.exam_name}>"
 
 """
-    class Ques:
+    class Question:
+        id: int primary key
+        question_name: str
+        opt1: str
+        opt2: str
+        opt3: str
+        opt4: str
+        correct: int
+        exam_id: int
+        exams: relationship
 
 """
+class Question(Base):
+    __tablename__ = "question"
+    id = Column(Integer(), primary_key = True)
+    question_name = Column(String(80), unique = True, nullable = False)
+    opt1 = Column(String(80), nullable = False)
+    opt2 = Column(String(80), nullable = False)
+    opt3 = Column(String(80), nullable = False)
+    opt4 = Column(String(80), nullable = False)
+    correct = Column(Integer(), nullable = False) 
+    exam_id = Column(Integer(), ForeignKey("exam.id"))
+    exam = relationship("Exam", backref= "question")
+
+    def __repr__(self):
+        return f"<Question {self.question_name}>"

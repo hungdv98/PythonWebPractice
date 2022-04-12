@@ -1,6 +1,9 @@
 from fastapi import FastAPI
 from auth_routes import auth_router
 from uni_routes import uni_router
+from user_routes import user_router
+from exam_routes import exam_router
+from question_routes import question_router
 from fastapi_jwt_auth import AuthJWT
 from schemas import Settings
 import inspect, re
@@ -58,3 +61,6 @@ def get_config():
 
 app.include_router(auth_router)
 app.include_router(uni_router)
+app.include_router(exam_router)
+app.include_router(question_router)
+app.include_router(user_router)

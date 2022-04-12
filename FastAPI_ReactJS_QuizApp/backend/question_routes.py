@@ -1,19 +1,19 @@
 from fastapi import APIRouter, status, Depends, Response
 from fastapi.exceptions import HTTPException
 from database import Session, engine
-from schemas import UniModel
-from models import Uni, Ruler
+from schemas import QuestionModel
+from models import Question, Ruler
 from fastapi_jwt_auth import AuthJWT
 from fastapi.encoders import jsonable_encoder
 
-uni_router = APIRouter(
-    prefix = "/uni",
-    tags = ["uni"]
+question_router = APIRouter(
+    prefix = "/question",
+    tags = ["question"]
 )
 
 session = Session(bind = engine)
 
-@uni_router.get("/hello")
+@question_router.get("/hello")
 async def hello(Authorize:AuthJWT = Depends()):
     """
         ## Hello World route
@@ -28,14 +28,20 @@ async def hello(Authorize:AuthJWT = Depends()):
         )
     return {"message":"Hello World"}
 
-@uni_router.post("/", 
+@question_router.post("/", 
     status_code = status.HTTP_201_CREATED
 )
-async def create_a_university(uni:UniModel, Authorize:AuthJWT = Depends()):
+async def create_a_question(ques:QuestionModel, Authorize:AuthJWT = Depends()):
     """
-        ## Create a university
+        ## Create a question
         This requires the following
-        - uniname : str
+        - question_name : str
+        - opt1 : str
+        - opt2 : str
+        - opt3 : str
+        - opt4 : str
+        - correct : int
+        - exam_id : int
     """
     try:
         Authorize.jwt_required()
@@ -49,15 +55,27 @@ async def create_a_university(uni:UniModel, Authorize:AuthJWT = Depends()):
     ruler = session.query(Ruler).filter(Ruler.rulername == current_ruler).first()
 
     if ruler:
-        new_uni = Uni(
-            uniname = uni.uniname
+        new_ques = Question(
+            question_name = ques.question_name,
+            opt1 = ques.opt1,
+            opt2 = ques.opt2,
+            opt3 = ques.opt3,
+            opt4 = ques.opt4,
+            correct = ques.correct,
+            exam_id = ques.exam_id
         )
       
-        session.add(new_uni)
+        session.add(new_ques)
         session.commit()
 
         response = {
-            "uniname": new_uni.uniname,
+            "question_name": new_ques.question_name,
+            "opt1": new_ques.opt1,
+            "opt2": new_ques.opt2,
+            "opt3": new_ques.opt3,
+            "opt4": new_ques.opt4,
+            "correct": new_ques.correct,
+            "exam_id": new_ques.exam_id
         }
       
         return jsonable_encoder(response)
@@ -67,12 +85,11 @@ async def create_a_university(uni:UniModel, Authorize:AuthJWT = Depends()):
         detail = "User not allowed to carry out request"
     )
 
-
-@uni_router.get("/")
-async def list_all_universities(Authorize:AuthJWT = Depends()):
+@question_router.get("/")
+async def list_all_questions(Authorize:AuthJWT = Depends()):
     """
-        ## List all universities
-        This lists all universities made. It can be accessed by superusers
+        ## List all questions
+        This lists all questions made. It can be accessed by superusers
     """
     try:
         Authorize.jwt_required()
@@ -87,18 +104,18 @@ async def list_all_universities(Authorize:AuthJWT = Depends()):
     ruler = session.query(Ruler).filter(Ruler.rulername == current_ruler).first()
 
     if ruler:
-        unis = session.query(Uni).all()
-        return jsonable_encoder(unis)
+        questions = session.query(Question).all()
+        return jsonable_encoder(questions)
     raise HTTPException(
         status_code = status.HTTP_401_UNAUTHORIZED,
         detail = "You are not superuser"
     )
 
-@uni_router.get("/{id}")
-async def get_university_by_id(id:int, Authorize:AuthJWT = Depends()):
+@question_router.get("/{id}")
+async def get_question_by_id(id:int, Authorize:AuthJWT = Depends()):
     """
-        ## Get a university by its ID
-        This gets a university by its ID and is only accessed by superuser
+        ## Get a question by its ID
+        This gets a question by its ID and is only accessed by superuser
     """
     try:
         Authorize.jwt_required()
@@ -113,19 +130,25 @@ async def get_university_by_id(id:int, Authorize:AuthJWT = Depends()):
     current_ruler = session.query(Ruler).filter(Ruler.rulername == ruler).first()
 
     if current_ruler:
-        uni = session.query(Uni).filter(Uni.id == id).first()
-        return jsonable_encoder(uni)
+        question = session.query(Question).filter(Question.id == id).first()
+        return jsonable_encoder(question)
     raise HTTPException(
         status_code = status.HTTP_401_UNAUTHORIZED,
         detail = "User not allowed to carry out request"
     )
 
-@uni_router.put("/update/{id}")
-async def update_university(id:int, uni:UniModel, Authorize:AuthJWT = Depends()):
+@question_router.put("/update/{id}")
+async def update_question(id:int, ques:QuestionModel, Authorize:AuthJWT = Depends()):
     """
-        ## Updating a university
-        This updates a university and requires the following fields
-        - uniname : str
+        ## Updating a question
+        This updates a question and requires the following fields
+        - question_name : str
+        - opt1 : str
+        - opt2 : str
+        - opt3 : str
+        - opt4 : str
+        - correct : int
+        - exam_id : int
     """
     try:
         Authorize.jwt_required()
@@ -135,25 +158,37 @@ async def update_university(id:int, uni:UniModel, Authorize:AuthJWT = Depends())
             detail = "Invalid Token"
         )
     
-    uni_to_update = session.query(Uni).filter(Uni.id == id).first()
+    ques_to_update = session.query(Question).filter(Question.id == id).first()
 
-    uni_to_update.uniname = uni.uniname
+    ques_to_update.question_name = ques.question_name
+    ques_to_update.opt1 = ques.opt1
+    ques_to_update.opt2 = ques.opt2
+    ques_to_update.opt3 = ques.opt3
+    ques_to_update.opt4 = ques.opt4
+    ques_to_update.correct = ques.correct
+    ques_to_update.exam_id = ques.exam_id
 
     session.commit()
 
     response = {
-        "uniname": uni_to_update.uniname,
+        "question_name": ques_to_update.question_name,
+        "opt1": ques_to_update.opt1,
+        "opt2": ques_to_update.opt2,
+        "opt3": ques_to_update.opt3,
+        "opt4": ques_to_update.opt4,
+        "correct": ques_to_update.correct,
+        "exam_id": ques_to_update.exam_id
     }
 
     return jsonable_encoder(response)
 
-@uni_router.delete("/delete/{id}",
+@question_router.delete("/delete/{id}",
     status_code = status.HTTP_204_NO_CONTENT
 )
-async def delete_a_university(id:int, Authorize:AuthJWT = Depends()):
+async def delete_a_question(id:int, Authorize:AuthJWT = Depends()):
     """
-        ## Delete a university
-        This deletes a university by its id
+        ## Delete a question
+        This deletes a question by its id
     """
     try:
         Authorize.jwt_required()
@@ -163,15 +198,15 @@ async def delete_a_university(id:int, Authorize:AuthJWT = Depends()):
             detail = "Invalid Token"
         )
     
-    uni_to_delete = session.query(Uni).filter(Uni.id == id).first()
-    uniName = uni_to_delete.uniname
+    ques_to_delete = session.query(Question).filter(Question.id == id).first()
+    quesName = ques_to_delete.question_name
 
     try:        
-        session.delete(uni_to_delete)
+        session.delete(ques_to_delete)
         session.commit()
         return Response(status_code = status.HTTP_204_NO_CONTENT)
     except Exception as e:
         raise HTTPException(
             status_code = status.HTTP_204_NO_CONTENT,
-            detail = f"Failed to delete {uniName} with error {e}"
+            detail = f"Failed to delete {quesName} with error {e}"
         )
