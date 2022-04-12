@@ -121,7 +121,7 @@ async def get_university_by_id(id:int, Authorize:AuthJWT = Depends()):
     )
 
 @uni_router.put("/update/{id}")
-async def update_university(id:int, uni:UniModel, Authorize:AuthJWT = Depends()):
+async def update_a_university(id:int, uni:UniModel, Authorize:AuthJWT = Depends()):
     """
         ## Updating a university
         This updates a university and requires the following fields

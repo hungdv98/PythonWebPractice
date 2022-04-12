@@ -138,7 +138,7 @@ async def get_question_by_id(id:int, Authorize:AuthJWT = Depends()):
     )
 
 @question_router.put("/update/{id}")
-async def update_question(id:int, ques:QuestionModel, Authorize:AuthJWT = Depends()):
+async def update_a_question(id:int, ques:QuestionModel, Authorize:AuthJWT = Depends()):
     """
         ## Updating a question
         This updates a question and requires the following fields
