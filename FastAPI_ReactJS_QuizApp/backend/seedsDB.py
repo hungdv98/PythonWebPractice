@@ -181,6 +181,17 @@ questions = {
     }
 }
 
+user_list = {
+    1: {
+        "fullname": "",
+        "mssv": "",
+        "major": "",
+        "email": "",
+        "phonenumb": "",
+        "uni_id": 17
+    },
+}
+
 # SignUp
 signupRes = requests.post(
     "http://localhost:5000/auth/signup",
@@ -235,3 +246,5 @@ for k,v in questions.items():
         }
     )
     print("Create new question: ", json.loads(create_ques.text))
+
+# Create users
