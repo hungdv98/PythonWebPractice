@@ -2,7 +2,7 @@ from fastapi import APIRouter, status, Depends, Response
 from fastapi.exceptions import HTTPException
 from database import Session, engine
 from schemas import ExamModel
-from models import Uni, Ruler, Exam
+from models import Question, Uni, Ruler, Exam
 from fastapi_jwt_auth import AuthJWT
 from fastapi.encoders import jsonable_encoder
 

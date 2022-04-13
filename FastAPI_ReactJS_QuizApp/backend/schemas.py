@@ -1,4 +1,3 @@
-from optparse import Option
 from pydantic import BaseModel
 from typing import Optional
 
@@ -37,8 +36,7 @@ class UserModel(BaseModel):
     major:str
     email:str
     phonenumb:str
-    count:int
-    score:int
+    uni_id:Optional[int]
 
 class QuestionModel(BaseModel):
     id:Optional[int]
@@ -60,3 +58,14 @@ class ExamModel(BaseModel):
 
     class Config:
         orm_mode = True 
+
+class FinalResult(BaseModel):
+    id:Optional[int]
+    user_id:int 
+    exam_id:int
+    uni_id:int
+    datetime:str 
+    score:str
+
+    class Config:
+        orm_mode = True

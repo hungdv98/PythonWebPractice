@@ -1,3 +1,4 @@
+from email.policy import default
 from database import Base
 from sqlalchemy import Column, Integer, Boolean, Text, String, ForeignKey
 from sqlalchemy.orm import relationship
@@ -50,21 +51,42 @@ class Uni(Base):
         phonenumb:str
         count:int
         score:int
+        uni_id:relationship
 """
 
 class User(Base):
-    __tablename__ = "user"
+    __tablename__ = "userbot"
     id = Column(Integer(), primary_key = True)
     fullname = Column(String(80), unique = False)
     mssv = Column(String(25), unique = True)
     major = Column(String(80))
     email = Column(String(80), unique = True)
     phonenumb = Column(String(25), unique = True)
-    count = Column(Integer(), default = 0)
-    score = Column(Integer(), default = 0)
+    uni_id = Column(Integer(), ForeignKey("uni.id"))
 
     def __repr__(self):
         return f"<User {self.mssv}>"
+
+"""
+    class FinalResult:
+        id: int primary key
+        datetime: str (format: yyyymmdd)
+        user_id: relationship
+        exam_id: relationship
+        uni_id: relationship
+        score: str
+"""
+class FinalResult(Base):
+    __tablename__ = "finalresult"
+    id = Column(Integer(), primary_key = True)
+    datetime = Column(String(10), nullable = False)
+    user_id = Column(Integer(), ForeignKey("userbot.id"))
+    exam_id = Column(Integer(), ForeignKey("exam.id"))
+    uni_id = Column(Integer(), ForeignKey("uni.id"))
+    score = Column(String(), default = "0")
+
+    def __repr__(self):
+        return f"<FinalResult {self.id}>"
 
 """
     class Exam:
