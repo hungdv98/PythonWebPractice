@@ -183,11 +183,43 @@ questions = {
 
 user_list = {
     1: {
-        "fullname": "",
-        "mssv": "",
-        "major": "",
-        "email": "",
-        "phonenumb": "",
+        "fullname": "Đặng Việt Hưng",
+        "mssv": "AT13CLC0113",
+        "major": "An toàn thông tin",
+        "email": "packetloss0709@gmail.com",
+        "phonenumb": "0352345898",
+        "uni_id": 17
+    },
+    2: {
+        "fullname": "Trần Công Giang",
+        "mssv": "AT13CLC0112",
+        "major": "An toàn thông tin",
+        "email": "giangtran@gmail.com",
+        "phonenumb": "0352346899",
+        "uni_id": 17
+    },
+    3: {
+        "fullname": "Nguyễn Phúc Hiếu",
+        "mssv": "AT13CLC0002",
+        "major": "An toàn thông tin",
+        "email": "hieunguyen@gmail.com",
+        "phonenumb": "0351357898",
+        "uni_id": 17
+    },
+    4: {
+        "fullname": "Nguyễn Quang Trung",
+        "mssv": "AT13CLC0224",
+        "major": "An toàn thông tin",
+        "email": "quangtrung@gmail.com",
+        "phonenumb": "0352555899",
+        "uni_id": 17
+    },
+    5: {
+        "fullname": "Phạm Tài Tuệ",
+        "mssv": "AT13CLC0104",
+        "major": "An toàn thông tin",
+        "email": "taitue0709@gmail.com",
+        "phonenumb": "0352111998",
         "uni_id": 17
     },
 }
@@ -248,3 +280,9 @@ for k,v in questions.items():
     print("Create new question: ", json.loads(create_ques.text))
 
 # Create users
+for k,v in user_list.items():
+    create_user = requests.post(
+        "http://localhost:5000/user",
+        json = v 
+    )
+    print("Create new user: ", json.loads(create_user.text))

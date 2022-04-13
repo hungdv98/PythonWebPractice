@@ -59,10 +59,11 @@ async def create_new_user(user:UserModel):
         response = {
             "fullname": new_user.fullname,
             "mssv": new_user.mssv,
-            "major": new_user.mssv,
+            "major": new_user.major,
             "email": new_user.email,
             "phonenumb": new_user.phonenumb,
-            "uni_id": new_user.uni_id
+            "uni_id": new_user.uni_id,
+            "id": new_user.id
         }
       
         return jsonable_encoder(response)

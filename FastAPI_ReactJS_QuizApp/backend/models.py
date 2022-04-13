@@ -79,7 +79,7 @@ class User(Base):
 class FinalResult(Base):
     __tablename__ = "finalresult"
     id = Column(Integer(), primary_key = True)
-    datetime = Column(String(10), nullable = False)
+    datetime = Column(String(20), nullable = False)
     user_id = Column(Integer(), ForeignKey("userbot.id"))
     exam_id = Column(Integer(), ForeignKey("exam.id"))
     uni_id = Column(Integer(), ForeignKey("uni.id"))

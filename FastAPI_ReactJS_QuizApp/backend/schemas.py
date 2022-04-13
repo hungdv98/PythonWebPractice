@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import Optional
+from typing import Optional, List
 
 class SignUpModel(BaseModel):
     id:Optional[int]
@@ -66,6 +66,13 @@ class FinalResult(BaseModel):
     uni_id:int
     datetime:str 
     score:str
+
+    class Config:
+        orm_mode = True
+
+class SubmitAns(BaseModel):
+    user_id:int
+    ans: List[dict] = []
 
     class Config:
         orm_mode = True
