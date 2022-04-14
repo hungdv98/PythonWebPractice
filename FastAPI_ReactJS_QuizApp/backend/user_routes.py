@@ -5,6 +5,7 @@ from schemas import UserModel
 from models import Ruler, User
 from fastapi_jwt_auth import AuthJWT
 from fastapi.encoders import jsonable_encoder
+import json
 
 user_router = APIRouter(
     prefix = "/user",
@@ -66,7 +67,8 @@ async def create_new_user(user:UserModel):
             "id": new_user.id
         }
       
-        return jsonable_encoder(response)
+        #return jsonable_encoder(response)
+        return json.dumps(response)
 
     except Exception as e:
         raise HTTPException(

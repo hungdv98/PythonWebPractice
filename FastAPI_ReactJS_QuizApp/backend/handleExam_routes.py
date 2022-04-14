@@ -6,6 +6,7 @@ from models import Question, FinalResult, Exam, User
 from fastapi_jwt_auth import AuthJWT
 from fastapi.encoders import jsonable_encoder
 from helpers import check_not_passed, get_numb_diff_pair, get_time_format
+import json
 
 gexam_router = APIRouter(
     prefix = "/gexam",
@@ -45,6 +46,7 @@ async def get_exam(id:int):
         ).filter(Question.exam_id == id).all()
 
     return jsonable_encoder(listQues)
+    #return json.dumps(jsonable_encoder(listQues))
 
 @gexam_router.post("/{id}",
     status_code = status.HTTP_201_CREATED
