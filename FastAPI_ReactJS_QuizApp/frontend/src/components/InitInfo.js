@@ -1,10 +1,13 @@
-import React,{useState} from "react";
-import {Form,Button} from "react-bootstrap";
-import {useForm} from "react-hook-form";
+import React,{ useContext } from "react";
+import { Form, Button } from "react-bootstrap";
+import { useForm } from "react-hook-form";
+import { GameStateContext } from "../helpers/Contexts";
+
 
 const InfoForm=()=>{
 
     const {register,handleSubmit,reset,formState:{errors}}=useForm()
+    const { gameState, setGameState }  = useContext( GameStateContext );
 
     const submitForm=(data)=>{
         const body={
@@ -99,7 +102,14 @@ const InfoForm=()=>{
                 <br/>
                     <Form.Group>
                         <Button variant="primary"
-                        onClick={handleSubmit(submitForm)}>Bắt đầu bài thi</Button> 
+                            onClick={ 
+                                () => {
+                                    handleSubmit(submitForm),
+                                    setGameState("playing")
+                                    }
+                                }>
+                                Bắt đầu bài thi
+                        </Button> 
                     </Form.Group>
             </form>
         </div>
