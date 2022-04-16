@@ -7,7 +7,7 @@ import { GameStateContext } from "../helpers/Contexts";
 const InfoForm=()=>{
 
     const {register,handleSubmit,reset,formState:{errors}}=useForm()
-    const { gameState, setGameState }  = useContext( GameStateContext );
+    const { gameState, setGameState, userid, setUserid }  = useContext( GameStateContext );
 
     const submitForm=(data)=>{
         const body={
@@ -30,9 +30,13 @@ const InfoForm=()=>{
         .then((res)=>res.json())
         .then((data)=>{
             console.log(data)
+            //let tmpData = JSON.parse(data)["id"].toString();
+            //console.log("TEMP_DATA = ", tmpData); 
+            setUserid(JSON.parse(data)["id"].toString());
         })
         .catch(err=>console.log(err))
         reset();    
+        setGameState("playing");
     }
 
     return(
@@ -102,11 +106,11 @@ const InfoForm=()=>{
                 <br/>
                     <Form.Group>
                         <Button variant="primary"
-                            onClick={ 
-                                () => {
-                                    handleSubmit(submitForm),
-                                    setGameState("playing")
-                                    }
+                            onClick={ handleSubmit(submitForm)
+                                // () => {
+                                //     handleSubmit(submitForm),
+                                //     // setGameState("playing")
+                                //     }
                                 }>
                                 Bắt đầu bài thi
                         </Button> 

@@ -11,6 +11,10 @@ function Quiz(){
  
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [Questions, setQuestions] = useState([]);
+    
+    const { gameState, setGameState, userid, setUserid } = useContext(
+        GameStateContext
+    );
 
     const axios = require("axios");
    
@@ -26,13 +30,15 @@ function Quiz(){
 
     const nextQuestion = (e) => {
         e.preventDefault();
-        handleRequest["ans"].push({"id":Questions[currentQuestion].id,"correct":e.target.value});
+        handleRequest["ans"].push({"id":Questions[currentQuestion].id,"correct":parseInt(e.target.value)});
         setCurrentQuestion(currentQuestion + 1);
         if (currentQuestion === Questions.length - 1){
-            handleRequest["ans"].push({"id":Questions[currentQuestion].id,"correct":e.target.value});
+            handleRequest["ans"].push({"id":Questions[currentQuestion].id,"correct":parseInt(e.target.value)});
             setGameState("finished");
             handleRequest["ans"].pop();
+            handleRequest["user_id"] = parseInt(userid);
             console.log(handleRequest);
+            debugger;
         }
     };
 
@@ -42,10 +48,6 @@ function Quiz(){
         setGameState("finished");
         console.log(handleRequest);
     };
-
-    const { gameState, setGameState } = useContext(
-        GameStateContext
-    );
     
     return(
         <div className="Quiz">
