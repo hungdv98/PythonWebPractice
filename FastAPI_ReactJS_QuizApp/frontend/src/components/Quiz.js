@@ -1,35 +1,46 @@
 import "../App.css";
-import { useState } from "react";
-//import { Questions } from "../helpers/Questions";
-import getData from "../helpers/Questions";
-
-
-
-import { useContext, useEffect } from "react";
+import { useState, useContext, useEffect } from "react";
 import { GameStateContext } from "../helpers/Contexts";
 
+let handleRequest = {
+    "user_id":0,
+    "ans":[]
+};
 
 function Quiz(){
  
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [Questions, setQuestions] = useState([]);
+
     const axios = require("axios");
    
     async function getData(){
         let res = await axios.get("/gexam/1"); 
         setQuestions(res.data);
+        console.log("data = ",res.data);
     }
 
     useEffect(() => {
         getData();
     },[]);
 
-    const nextQuestion = () => {
+    const nextQuestion = (e) => {
+        e.preventDefault();
+        handleRequest["ans"].push({"id":Questions[currentQuestion].id,"correct":e.target.value});
         setCurrentQuestion(currentQuestion + 1);
+        if (currentQuestion === Questions.length - 1){
+            handleRequest["ans"].push({"id":Questions[currentQuestion].id,"correct":e.target.value});
+            setGameState("finished");
+            handleRequest["ans"].pop();
+            console.log(handleRequest);
+        }
     };
 
-    const finishQuiz = () => {
+    const finishQuiz = (e) => {
+        e.preventDefault();
+        handleRequest["ans"].push({"id":Questions[currentQuestion].id,"correct":e.target.value});
         setGameState("finished");
+        console.log(handleRequest);
     };
 
     const { gameState, setGameState } = useContext(
@@ -40,20 +51,20 @@ function Quiz(){
         <div className="Quiz">
             <h1>{Questions.length > 0 && Questions[currentQuestion].question_name}</h1>
             <div className="questions">
-                <button onClick={nextQuestion}>
+                <button onClick={nextQuestion} value="1">
                     {Questions.length > 0 &&Questions[currentQuestion].opt1}
                 </button>
-                <button onClick={nextQuestion}>
+                <button onClick={nextQuestion} value="2">
                     {Questions.length > 0 &&Questions[currentQuestion].opt2}
                 </button>
-                <button onClick={nextQuestion}>
+                <button onClick={nextQuestion} value="3">
                     {Questions.length > 0 &&Questions[currentQuestion].opt3}
                 </button>
-                <button onClick={nextQuestion}>
+                <button onClick={nextQuestion} value="4">
                     {Questions.length > 0 &&Questions[currentQuestion].opt4}
                 </button>
             </div>
-            {currentQuestion === Questions.length - 1 ? (
+            {/* {currentQuestion === Questions.length - 1 ? (
                 <button onClick={finishQuiz} id="nextQuestion">
                     Hoàn thành
                 </button>
@@ -61,7 +72,7 @@ function Quiz(){
                 <button onClick={nextQuestion} id="nextQuestion">
                     Câu tiếp
                 </button>
-            )}
+            )} */}
         </div>
     )
 }
