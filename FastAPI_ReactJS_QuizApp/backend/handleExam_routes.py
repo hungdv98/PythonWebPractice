@@ -97,7 +97,7 @@ async def submit_exam(id:int, submit_ans:SubmitAns):
         # }
       
         # return jsonable_encoder(response)
-        return {"message":"Congratulation!"}
+        return {"message":f"{finalScore.score}"}
     
     except Exception as e:
         raise HTTPException(
