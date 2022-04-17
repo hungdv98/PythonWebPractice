@@ -12,16 +12,20 @@ function Quiz(){
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [Questions, setQuestions] = useState([]);
     
-    const { gameState, setGameState, userid, setUserid } = useContext(
+    const { setGameState, userid, setHandleResult, setExamid } = useContext(
         GameStateContext
     );
 
     const axios = require("axios");
+
+    //http://localhost:3000/?uid=17&eid=1
+    let examId = parseInt(window.location.href.split("?")[1].split("&")[1].split("=")[1]);
    
     async function getData(){
-        let res = await axios.get("/gexam/1"); 
+        let res = await axios.get(`/gexam/${examId}`); 
         setQuestions(res.data);
-        console.log("data = ",res.data);
+        setExamid(examId);
+        //console.log("data = ",res.data);
     }
 
     useEffect(() => {
@@ -37,16 +41,9 @@ function Quiz(){
             setGameState("finished");
             handleRequest["ans"].pop();
             handleRequest["user_id"] = parseInt(userid);
-            console.log(handleRequest);
-            debugger;
+            //console.log(handleRequest);
+            setHandleResult(handleRequest);
         }
-    };
-
-    const finishQuiz = (e) => {
-        e.preventDefault();
-        handleRequest["ans"].push({"id":Questions[currentQuestion].id,"correct":e.target.value});
-        setGameState("finished");
-        console.log(handleRequest);
     };
     
     return(

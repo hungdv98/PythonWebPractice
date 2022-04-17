@@ -7,7 +7,8 @@ import { GameStateContext } from "../helpers/Contexts";
 const InfoForm=()=>{
 
     const {register,handleSubmit,reset,formState:{errors}}=useForm()
-    const { gameState, setGameState, userid, setUserid }  = useContext( GameStateContext );
+    const { setGameState, setUserid, setUniid }  = useContext( GameStateContext );
+    let uniId = parseInt(window.location.href.split("?")[1].split("&")[0].split("=")[1]);
 
     const submitForm=(data)=>{
         const body={
@@ -16,7 +17,7 @@ const InfoForm=()=>{
             major:data.major,
             email:data.email,
             phonenumb:data.phonenumb,
-            uni_id:17
+            uni_id:`${uniId}`
         }
 
         const requestOptions={
@@ -33,6 +34,7 @@ const InfoForm=()=>{
             //let tmpData = JSON.parse(data)["id"].toString();
             //console.log("TEMP_DATA = ", tmpData); 
             setUserid(JSON.parse(data)["id"].toString());
+            setUniid(uniId);
         })
         .catch(err=>console.log(err))
         reset();    
