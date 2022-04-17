@@ -5,7 +5,11 @@ const HomePage = () => {
     
     console.log("logged = ", logged);
 
-    return <div>{logged}</div>;
+    return(
+        <div className="Home">
+            {logged}
+        </div>
+    )
   };
   
   export default HomePage;
