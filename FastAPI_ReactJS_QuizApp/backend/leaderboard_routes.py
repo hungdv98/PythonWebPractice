@@ -47,7 +47,19 @@ async def get_leaderboard_by_exam_id(id:int, Authorize:AuthJWT = Depends()):
     current_ruler = session.query(Ruler).filter(Ruler.rulername == ruler).first()
 
     if current_ruler:
-        res = session.execute("select distinct(usr.fullname), u.uniname, fr.datetime, fr.score from finalresult fr, userbot usr, uni u where fr.user_id = usr.id and u.id = fr.uni_id order by fr.score desc;")
+        res = session.execute(
+            f"""
+                select 
+                    distinct(usr.email), 
+                    usr.fullname, 
+                    usr.phonenumb, 
+                    usr.mssv, 
+                    fr.datetime, 
+                    fr.score 
+                from finalresult fr, userbot usr, uni u 
+                where fr.user_id = usr.id and u.id = fr.uni_id and u.id = {id};
+            """
+        )
 
         response = []
         
