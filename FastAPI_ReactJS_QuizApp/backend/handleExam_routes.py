@@ -5,7 +5,7 @@ from schemas import SubmitAns
 from models import Question, FinalResult, Exam, User
 from fastapi_jwt_auth import AuthJWT
 from fastapi.encoders import jsonable_encoder
-from helpers import check_not_passed, get_numb_diff_pair, get_time_format
+from helpers import check_not_passed, get_numb_diff_pair, get_time_format, parsing_score
 import json
 
 gexam_router = APIRouter(
@@ -82,7 +82,7 @@ async def submit_exam(id:int, submit_ans:SubmitAns):
         user_id = submit_ans.user_id,
         exam_id = id,
         uni_id = uni_id,
-        score = str(score)+"/"+str(numQues)
+        score = parsing_score(score)+"/"+str(numQues)
     )
     try:
         session.add(finalScore)

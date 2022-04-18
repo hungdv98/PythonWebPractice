@@ -13,3 +13,9 @@ def get_numb_diff_pair(list1, list2):
 def get_time_format():
     import time 
     return time.strftime("%Y%m%d-%H:%M:%S")
+
+def parsing_score(score):
+    if score < 10:
+        return "0"+str(score)
+    else:
+        return str(score)

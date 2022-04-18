@@ -57,7 +57,8 @@ async def get_leaderboard_by_exam_id(id:int, Authorize:AuthJWT = Depends()):
                     fr.datetime, 
                     fr.score 
                 from finalresult fr, userbot usr, uni u 
-                where fr.user_id = usr.id and u.id = fr.uni_id and u.id = {id};
+                where fr.user_id = usr.id and u.id = fr.uni_id and u.id = {id}
+                order by fr.score desc;
             """
         )
 
