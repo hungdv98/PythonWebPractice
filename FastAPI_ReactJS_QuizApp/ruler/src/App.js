@@ -8,6 +8,7 @@ import LoginPage from "./components/Login";
 import NavBar from "./components/Navbar";
 import HomePage from "./components/Home";
 import CreateQRPage from "./components/CreateQR";
+import Leaderboard from "./components/Leaderboard";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/main.css';
@@ -22,6 +23,7 @@ function App() {
         <Route path="/signup" element={<SignUpPage />}/>
         <Route path="/login" element={<LoginPage />}/>
         <Route path="/create_qr" element={<CreateQRPage />}/>
+        <Route path="/leaderboard" element={<Leaderboard />}></Route>
       </Routes>
     </div>
     </BrowserRouter>

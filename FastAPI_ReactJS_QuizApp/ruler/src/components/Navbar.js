@@ -12,7 +12,7 @@ const LoggedInLinks=()=>{
                 <Link className="nav-link active" to="/create_qr">Create QR</Link>
             </li>
             <li className="nav-item">
-                <Link className="nav-link active" to="/#">Leaderboard</Link>
+                <Link className="nav-link active" to="/leaderboard">Leaderboard</Link>
             </li>
             <li className="nav-item">
                 <a className="nav-link active" href="/#" onClick={()=>{logout()}}>Log Out</a>
