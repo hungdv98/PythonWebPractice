@@ -1,3 +1,4 @@
+from tabnanny import check
 from fastapi import APIRouter, status, Depends, Response
 from fastapi.exceptions import HTTPException
 from database import Session, engine
@@ -43,6 +44,17 @@ async def create_new_user(user:UserModel):
         - phonenumb:str
         - uni_id:int
     """
+
+    check_user = session.query(User).filter(User.fullname == user.fullname).first()
+    check_mssv = session.query(User).filter(User.mssv == user.mssv).first()
+    check_email = session.query(User).filter(User.email == user.email).first()
+    check_phone = session.query(User).filter(User.phonenumb == user.phonenumb).first()
+
+    if (check_user or check_mssv or check_email or check_phone):
+        res = {
+            "id": check_user.id
+        }
+        return json.dumps(res)
 
     try:
         new_user = User(
