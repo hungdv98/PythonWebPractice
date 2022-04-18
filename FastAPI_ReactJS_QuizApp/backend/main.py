@@ -5,6 +5,7 @@ from user_routes import user_router
 from exam_routes import exam_router
 from question_routes import question_router
 from handleExam_routes import gexam_router
+from leaderboard_routes import leaderboard_router
 from fastapi_jwt_auth import AuthJWT
 from schemas import Settings
 import inspect, re
@@ -77,3 +78,4 @@ app.include_router(exam_router)
 app.include_router(question_router)
 app.include_router(user_router)
 app.include_router(gexam_router)
+app.include_router(leaderboard_router)

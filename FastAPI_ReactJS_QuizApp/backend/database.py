@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import declarative_base, sessionmaker
 
-engine = create_engine("postgresql://postgres:Abcd%401234@localhost:5432/vsecquiz", echo = True)
+engine = create_engine("postgresql://postgres:135790@localhost:5432/vsecquiz", echo = True)
 
 Base = declarative_base()
 
