@@ -31,7 +31,7 @@ const CreateQRPage = () => {
                 includeMargin={true}
             />
             <br />
-            <a onClick={downloadQR}> Download QR </a>
+            <button onClick={downloadQR}> Download QR </button>
         </div>
     )
 }

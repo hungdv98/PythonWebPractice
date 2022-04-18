@@ -1,30 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import { useAuth } from "../auth";
+import {Link} from "react-router-dom";
 import "../App.css";
 
 
 const LoggedinHome = () => {
     const [resdata, setResdata] = useState([]);
+    const [uniid, setUniid] = useState(0);
+    const [uni, setUni] = useState([]);
 
     let token=localStorage.getItem("REACT_TOKEN_AUTH_KEY");
-    // fetch("/leaderboard/17", {
-    //     method:"GET",
-    //     headers:{
-    //         "content-type":"application/json",
-    //         "Authorization": `Bearer ${JSON.parse(token)}`
-    //     },
-    // })
-    // .then(res => res.json())
-    // .then(data => {
-    //     console.log(data);
-    //     setResdata(data);
-    // })
-    // .catch((err) => console.log(err));
 
     const axios = require("axios");
     async function getData(){
-        let res = await axios.get("/leaderboard/17", {
+        let res = await axios.get(`/leaderboard/${uniid}`, {
             headers:{
                 "content-type":"application/json",
                 "Authorization": `Bearer ${JSON.parse(token)}`
@@ -32,98 +21,73 @@ const LoggedinHome = () => {
         });
         console.log(res.data);
         setResdata(res.data);
-       debugger;
+        //debugger;
     }
 
     useEffect(() => {
-        getData();
-    },[]);
+        const timeout = setTimeout(() => {
+            getData();
+        }, 3000);
+        getAllUni();
+    }, [resdata]);
+
+    const getAllUni=()=>{
+        const requestOptions={
+            method:"GET",
+            headers:{
+                "content-type":"application/json",
+                "Authorization": `Bearer ${JSON.parse(token)}`
+            }
+          }
+        fetch("/uni", requestOptions)
+        .then((res) => res.json())
+        .then((data) => { 
+            setUni(data);
+            //debugger;
+        })
+        .catch((err) => console.log(err));
+    }
 
     return(
-        <div>
+        <div className="leaderboard">
             <h1>Leaderboard</h1>
-
-
-            <div className="leaderboard">
-                <ul>
-                    {resdata.map(
-                        (info) => {
-                            <li>{info.fullname}</li>
-                        }
-                    )}
-                </ul>
+            <div className="handleResult">
+                <input 
+                    id="uni_id"  
+                    type="text"
+                    onChange={(e) => setUniid(parseInt(e.target.value))}
+                />
             </div>
+            {/* <select id='template-select' onChange={(e) => setUniid(parseInt(e.target.value))}>
+            <option>----</option>
+                {uni.map(option => <option key={option.id} value={option.id}>{option.uniname}</option>)}
+            </select> */}
+            <table>
+                <thead>
+                    <tr>
+                        <td className="special"><div>EMAIL</div></td>
+                        <td className="special"><div>FULLNAME</div></td>
+                        <td className="special"><div>PHONE</div></td>
+                        <td className="special"><div>MSSV</div></td>
+                        <td className="special"><div>DATETIME</div></td>
+                        <td className="special"><div>SCORE</div></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {resdata.map((data, index) =>(
+                        <tr key={index}>
+                            <td className="special"><div>{data.email}</div></td>
+                            <td className="special"><div>{data.fullname}</div></td>
+                            <td className="special"><div>{data.phonenumb}</div></td>
+                            <td className="special"><div>{data.mssv}</div></td>
+                            <td className="special"><div>{data.datetime}</div></td>
+                            <td className="special"><div>{data.score}</div></td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
         </div>
-       
     )
-  
-
-// //   const closeModal = () => {
-// //     setShow(false);
-// //   };
-
-//   return (
-//     <div className="leaderboard">
-//       {/* <Modal show={show} size="lg" onHide={closeModal}>
-//         <Modal.Body>
-//           <form>
-//             <Form.Group>
-//               <Form.Label>Title</Form.Label>
-//               <Form.Control
-//                 type="text"
-//                 {...register("title", {
-//                   required: true,
-//                   maxLength: 25,
-//                 })}
-//               />
-//             </Form.Group>
-//             {errors.title && (
-//               <p style={{ color: "red" }}>
-//                 <small>Title is required</small>
-//               </p>
-//             )}
-//             {errors.title?.type === "maxLength" && (
-//               <p style={{ color: "red" }}>
-//                 <small>Max characters should be 25</small>
-//               </p>
-//             )}
-//             <Form.Group>
-//               <Form.Label>Description</Form.Label>
-//               <Form.Control
-//                 as="textarea"
-//                 rows={5}
-//                 {...register("description", {
-//                   required: true,
-//                   maxLength: 255,
-//                 })}
-//               />
-//             </Form.Group>
-//             {errors.description && (
-//               <p style={{ color: "red" }}>
-//                 <small>Description is required</small>
-//               </p>
-//             )}
-//             {errors.description?.type === "maxLength" && (
-//               <p style={{ color: "red" }}>
-//                 <small>Max characters should be 255</small>
-//               </p>
-//             )}
-//             <br />
-//             <Form.Group>
-//               <Button variant="primary" onClick={handleSubmit(updateNote)}>
-//                 Save
-//               </Button>
-//             </Form.Group>
-//           </form>
-//         </Modal.Body>
-//       </Modal> */}
-
-//       {/* <h1>Leaderboard</h1>
-//       {res.map((data) => (
-//         <h1>{data.fullname}</h1>
-//       ))} */}
-//     </div>
-//   );
 };
 
 const LoggedoutHome = () => {
