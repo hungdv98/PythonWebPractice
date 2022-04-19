@@ -269,15 +269,15 @@ create_exam = requests.post(
 print("Create new exam: ", json.loads(create_exam.text))
 
 # Create questions
-for k,v in questions.items():
-    create_ques = requests.post(
-        "http://localhost:5000/question",
-        json = v,
-        headers = {
-            "Authorization":f"Bearer {access_token}"
-        }
-    )
-    print("Create new question: ", json.loads(create_ques.text))
+# for k,v in questions.items():
+#     create_ques = requests.post(
+#         "http://localhost:5000/question",
+#         json = v,
+#         headers = {
+#             "Authorization":f"Bearer {access_token}"
+#         }
+#     )
+#     print("Create new question: ", json.loads(create_ques.text))
 
 # Create users
 for k,v in user_list.items():
@@ -912,3 +912,14 @@ question_list = {
         "exam_id": 1
     }
 }
+
+
+for k,v in question_list.items():
+    create_ques = requests.post(
+        "http://localhost:5000/question",
+        json = v,
+        headers = {
+            "Authorization":f"Bearer {access_token}"
+        }
+    )
+    print("Create new question: ", json.loads(create_ques.text))
