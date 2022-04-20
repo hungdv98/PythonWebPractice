@@ -8,9 +8,19 @@ const InfoForm=()=>{
 
     const {register,handleSubmit,reset,formState:{errors}}=useForm()
     const { setGameState, setUserid, setUniid }  = useContext( GameStateContext );
-    let uniId = parseInt(window.location.href.split("?")[1].split("&")[0].split("=")[1]);
-
+    
+    let uniId;
+    try{
+        uniId = parseInt(window.location.href.split("?")[1].split("&")[0].split("=")[1]);
+    }catch(e){}
+    
+    
     const submitForm=(data)=>{
+
+        while (typeof uniId === "undefined"){
+            alert("Vui lòng scan lại QRCode");
+        }
+
         const body={
             fullname:data.fullname,
             mssv:data.mssv,
@@ -36,7 +46,7 @@ const InfoForm=()=>{
             setUserid(JSON.parse(data)["id"].toString());
             setUniid(uniId);
         })
-        .catch(err=>console.log(err))
+        .catch(err=>console.log(""))
         reset();    
         setGameState("playing");
     }
