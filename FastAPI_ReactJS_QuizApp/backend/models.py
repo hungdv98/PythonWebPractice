@@ -122,11 +122,11 @@ class Exam(Base):
 class Question(Base):
     __tablename__ = "question"
     id = Column(Integer(), primary_key = True)
-    question_name = Column(String(80), unique = True, nullable = False)
-    opt1 = Column(String(80), nullable = False)
-    opt2 = Column(String(80), nullable = False)
-    opt3 = Column(String(80), nullable = False)
-    opt4 = Column(String(80), nullable = False)
+    question_name = Column(String(300), unique = True, nullable = False)
+    opt1 = Column(String(300), nullable = False)
+    opt2 = Column(String(300), nullable = False)
+    opt3 = Column(String(300), nullable = False)
+    opt4 = Column(String(300), nullable = False)
     correct = Column(Integer(), nullable = False) 
     exam_id = Column(Integer(), ForeignKey("exam.id"))
     exam = relationship("Exam", backref= "question")

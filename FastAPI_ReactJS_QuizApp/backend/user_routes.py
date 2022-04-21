@@ -50,11 +50,27 @@ async def create_new_user(user:UserModel):
     check_email = session.query(User).filter(User.email == user.email).first()
     check_phone = session.query(User).filter(User.phonenumb == user.phonenumb).first()
 
-    if (check_user or check_mssv or check_email or check_phone):
+    if (check_user): 
         res = {
             "id": check_user.id
         }
         return json.dumps(res)
+    elif (check_mssv):
+        res = {
+            "id": check_mssv.id
+        }
+        return json.dumps(res)
+    elif (check_email):
+        res = {
+            "id": check_email.id
+        }
+        return json.dumps(res)
+    elif (check_phone):
+        res = {
+            "id": check_phone.id
+        }
+        return json.dumps(res)
+
 
     try:
         new_user = User(

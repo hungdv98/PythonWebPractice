@@ -35,7 +35,7 @@
   }
   
   .Menu input, button {
-    width: 300px;
+    width: 350px;
     height: 50px;
     margin: 5px;
     border: none;
@@ -83,6 +83,7 @@
     color: #ffffff;
   }
 
+<<<<<<< HEAD
 #tlct {
   background-color:#6199f2;
 }
@@ -90,3 +91,18 @@
 body {
   color:red;
 }
+=======
+  h1 {
+    font-size: 15px;
+  }
+
+  .Quiz button {
+    font-size: 15px;
+    text-align: center;
+    display: inline-block; 
+    margin: 10px;
+    display: table;
+    height: 70px;
+    
+  }
+>>>>>>> 3da4f516528bc54217fdfccb4ccdaaa31859daef

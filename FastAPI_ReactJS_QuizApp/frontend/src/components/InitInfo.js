@@ -44,7 +44,7 @@ const ValidUid = () => {
             setUserid(JSON.parse(data)["id"].toString());
             setUniid(uniId);
         })
-        .catch(err=>console.log(err))
+        .catch(err=>console.log(""))
         reset();    
         setGameState("playing");
     }
