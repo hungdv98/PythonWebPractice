@@ -25,7 +25,7 @@ const CreateQRPage = () => {
         <div>
             <QRCode
                 id='qrcode'
-                value="http://192.168.0.172:3000/?uid=17&eid=1"
+                value="http://jobfair.vsec.vn/?uid=27&eid=1"
                 size={290}
                 level={'H'}
                 includeMargin={true}

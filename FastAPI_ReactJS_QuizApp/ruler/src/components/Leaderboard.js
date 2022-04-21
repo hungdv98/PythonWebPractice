@@ -51,17 +51,17 @@ const LoggedinHome = () => {
     return(
         <div className="leaderboard">
             <h1>Leaderboard</h1>
-            <div className="handleResult">
+            {/* <div className="handleResult">
                 <input 
                     id="uni_id"  
                     type="text"
                     onChange={(e) => setUniid(parseInt(e.target.value))}
                 />
-            </div>
-            {/* <select id='template-select' onChange={(e) => setUniid(parseInt(e.target.value))}>
+            </div> */}
+            <select id='template-select' onChange={(e) => setUniid(parseInt(e.target.value))}>
             <option>----</option>
                 {uni.map(option => <option key={option.id} value={option.id}>{option.uniname}</option>)}
-            </select> */}
+            </select>
             <table>
                 <thead>
                     <tr>
