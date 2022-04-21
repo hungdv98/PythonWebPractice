@@ -19,14 +19,18 @@ const EndScreen = () => {
     getResult();
   },[]);
 
-  console.log(handleResult);
+  //console.log(handleResult);
 
   return (
     <div className="EndScreen">
-      <h1>Chúc mừng bạn đã hoàn thành bài thi</h1>
-      <h1>
+      <h1 id="es-title">CONGRATULATIONS!</h1>
+      <h2 id="es-s1">Chúc mừng bạn đã hoàn thành thử thách của chúng tôi</h2>
+      <h2 id="es-s1">Số điểm của bạn đã đạt được là</h2>
+      <span className="dot">
         {score}
-      </h1>
+      </span>
+      <h2 id="es-s1">Bạn sẽ nhận được một phần quà từ VSEC.</h2>
+      <h2 id="es-s1">Chúc bạn một ngày vui vẻ</h2>
       
     </div>
   );

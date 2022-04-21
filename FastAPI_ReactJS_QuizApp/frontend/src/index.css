@@ -2,8 +2,8 @@
 .modal {
     font-size: 15px;
     background: #6199f2;
-    width: 400px;
-    height: 500px;
+    width: 100%;
+    height: 100%;
   }
 .modal > .header {
     width: 100%;
@@ -39,6 +39,7 @@
 }
 .modal > .footer {
     text-align: center;
+    width: 98%;
 }
 #confirm101 {
     background-color:#d1dae6;

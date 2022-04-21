@@ -7,11 +7,18 @@ let handleRequest = {
     "ans":[]
 };
 
+const formatCD = (cc) => {
+    let c = new Date(parseInt(cc) * 1000).toISOString().substr(14, 5);
+    return c;
+}
+
 function Quiz(){
  
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [Questions, setQuestions] = useState([]);
     
+    const [counter, setCounter] = useState(1200);
+
     const { setGameState, userid, setHandleResult, setExamid } = useContext(
         GameStateContext
     );
@@ -30,7 +37,9 @@ function Quiz(){
 
     useEffect(() => {
         getData();
-    },[]);
+        const timer = counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
+        return () => clearInterval(timer);
+    },[counter]);
 
     const nextQuestion = (e) => {
         e.preventDefault();
@@ -47,7 +56,9 @@ function Quiz(){
     };
     
     return(
+        <>
         <div className="Quiz">
+        <div style={{color: "red"}}>Thời gian còn lại: {formatCD(counter)}</div>
             <h1>{Questions.length > 0 && Questions[currentQuestion].question_name}</h1>
             <div className="questions">
                 <button onClick={nextQuestion} value="1">
@@ -73,6 +84,7 @@ function Quiz(){
                 </button>
             )} */}
         </div>
+        </>
     )
 }
 

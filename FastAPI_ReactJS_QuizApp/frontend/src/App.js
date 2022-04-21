@@ -16,7 +16,8 @@ function App() {
 
   return (
     <div className="App">
-        <h2 style={{color: "white"}}>Chào mừng các bạn sinh viên tham gia mini game của VSEC</h2>
+        {/* <h2 style={{color: "white"}}>Chào mừng các bạn sinh viên tham gia mini game của VSEC</h2> */}
+        <img src="../logo-vsec.svg" alt="VSEC" id="logovsec"/>
         <GameStateContext.Provider
           value={{
             gameState,
@@ -33,7 +34,7 @@ function App() {
             setScore
           }}>
         {gameState === "menu" && <Menu />}
-        {gameState === "playing" && <Quiz />}   
+        {gameState === "playing" && <Quiz />}
         {gameState === "finished" && <EndScreen />}
         </GameStateContext.Provider>
     </div>
@@ -41,3 +42,4 @@ function App() {
 }
 
 export default App;
+
