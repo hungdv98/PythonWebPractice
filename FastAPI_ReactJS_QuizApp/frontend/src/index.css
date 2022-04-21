@@ -1,0 +1,45 @@
+/* index.css */ 
+.modal {
+    font-size: 15px;
+    background: #6199f2;
+    width: 400px;
+    height: 500px;
+  }
+.modal > .header {
+    width: 100%;
+    border-bottom: 1px solid gray;
+    font-size: 20px;
+    text-align: center;
+    padding: 5px;
+}
+.modal > .content {
+    width: 100%;
+    padding: 10px 5px;
+}
+.modal > .actions {
+    margin: auto;
+}
+.modal > .actions {
+    width: 100%;
+    padding: 10px 5px;
+    text-align: center;
+}
+.modal > .close {
+    cursor: pointer;
+    position: absolute;
+    display: block;
+    padding: 2px 5px;
+    line-height: 20px;
+    right: -10px;
+    top: -10px;
+    font-size: 24px;
+    background: red;
+    border-radius: 18px;
+    border: 1px solid #cfcece;
+}
+.modal > .footer {
+    text-align: center;
+}
+#confirm101 {
+    background-color:#d1dae6;
+}

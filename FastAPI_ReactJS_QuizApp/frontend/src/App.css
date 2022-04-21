@@ -1,6 +1,17 @@
+@font-face {
+	font-family: 'proxima_nova_rgregular';
+	src: url('https://litmus.com/fonts/Emails/proximanova-regular-webfont.eot');
+	src: url('https://litmus.com/fonts/Emails/proximanova-regular-webfont.eot?#iefix') format('embedded-opentype'),
+		 url('https://litmus.com/fonts/Emails/proximanova-regular-webfont.woff') format('woff'),
+		 url('https://litmus.com/fonts/Emails/proximanova-regular-webfont.ttf') format('truetype'),
+		 url('https://litmus.com/fonts/Emails/proximanova-regular-webfont.svg#proxima_nova_rgregular') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
 .App {
     text-align: center;
-    font-family: arial;
+    font-family: 'proxima_nova_rgregular';
     display: flex;
     justify-content: center;
     align-items: center;
@@ -30,6 +41,8 @@
     border: none;
     border-radius: 5px;
     font-size: 20px;
+    color: black;
+    background-color: white;
   }
 
   button:hover {
@@ -69,3 +82,11 @@
   h3 {
     color: #ffffff;
   }
+
+#tlct {
+  background-color:#6199f2;
+}
+
+body {
+  color:red;
+}
