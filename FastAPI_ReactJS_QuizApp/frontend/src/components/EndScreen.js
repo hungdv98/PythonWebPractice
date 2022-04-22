@@ -13,6 +13,7 @@ const EndScreen = () => {
   async function getResult(){
     let res = await axios.post(`/gexam/${examid}`, handleResult); 
     setScore(res.data["message"])
+    //debugger;
   }
 
   useEffect(() => {

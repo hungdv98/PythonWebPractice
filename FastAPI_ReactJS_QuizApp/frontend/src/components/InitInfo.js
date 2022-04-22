@@ -27,6 +27,7 @@ const ValidUid = () => {
             major:data.major,
             email:data.email,
             phonenumb:data.phonenumb,
+            jobpos:data.jobpos,
             uni_id:`${uniId}`
         }
 
@@ -122,8 +123,8 @@ const ValidUid = () => {
             <Form.Control type="text" 
                     placeholder=""
                     {...register("jobpos",{
-                        required:true,
-                        maxLength:20
+                        required:false,
+                        maxLength:80
                     })}
                     />
             <br/>

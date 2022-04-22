@@ -32,14 +32,18 @@ function Quiz(){
         let res = await axios.get(`/gexam/${examId}`); 
         setQuestions(res.data);
         setExamid(examId);
-        //console.log("data = ",res.data);
+        console.log("data = ",res.data);
     }
 
     useEffect(() => {
-        getData();
         const timer = counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
         return () => clearInterval(timer);
     },[counter]);
+
+    useEffect(() => {
+        getData();
+    },[]) 
+
 
     const nextQuestion = (e) => {
         e.preventDefault();
