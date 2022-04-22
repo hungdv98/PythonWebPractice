@@ -1,4 +1,4 @@
-from fastapi import APIRouter, status, Depends, Response
+from fastapi import APIRouter, status, Depends
 from fastapi.exceptions import HTTPException
 from database import Session, engine
 from schemas import SubmitAns
@@ -36,17 +36,42 @@ async def get_exam(id:int):
         ## Generate an exam for user
         This returns an exam, json format
     """
-    listQues = session.query(
-            Question.id,
-            Question.question_name,
-            Question.opt1,
-            Question.opt2,
-            Question.opt3,
-            Question.opt4
-        ).filter(Question.exam_id == id).all()
+    # listQues = session.query(
+    #         Question.id,
+    #         Question.question_name,
+    #         Question.opt1,
+    #         Question.opt2,
+    #         Question.opt3,
+    #         Question.opt4
+    #     ).filter(Question.exam_id == id).all()
 
-    return jsonable_encoder(listQues)
-    #return json.dumps(jsonable_encoder(listQues))
+    listQues = session.execute(
+        f"""
+            SELECT 
+                q.id,
+                q.question_name,
+                q.opt1,
+                q.opt2,
+                q.opt3,
+                q.opt4
+            FROM 
+                question q 
+            WHERE
+                q.exam_id = {id}
+            ORDER BY RANDOM()
+            LIMIT 26;
+        """
+    )
+
+
+    response = []
+    
+    for r in listQues:
+        response.append(dict(r))
+
+    return jsonable_encoder(response)
+    #return jsonable_encoder(listQues)
+    # return json.dumps(jsonable_encoder(listQues))
 
 @gexam_router.post("/{id}",
     status_code = status.HTTP_201_CREATED
@@ -69,11 +94,16 @@ async def submit_exam(id:int, submit_ans:SubmitAns):
     ).filter(Exam.id == id).first()
     uni_id = jsonable_encoder(uni_id)["uni_id"]
 
-    score = len(listAns)
+    score = 26
     numQues = score
 
-    if check_not_passed(listAns, submit_ans.ans):
-        score -= get_numb_diff_pair(listAns, submit_ans.ans)
+    user_keys = [k["id"] for k in submit_ans.ans]
+    correct_ans = [e for e in listAns if e["id"] in user_keys]
+    user_ans_sorted = sorted(submit_ans.ans, key=lambda d: d['id'])
+
+
+    if check_not_passed(correct_ans, user_ans_sorted):
+        score -= get_numb_diff_pair(correct_ans, user_ans_sorted)
 
     username = session.query(User.fullname).filter(User.id == submit_ans.user_id).first()
 

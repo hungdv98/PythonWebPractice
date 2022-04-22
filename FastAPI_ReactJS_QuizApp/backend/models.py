@@ -51,6 +51,7 @@ class Uni(Base):
         phonenumb:str
         count:int
         score:int
+        jobpos:str
         uni_id:relationship
 """
 
@@ -62,6 +63,7 @@ class User(Base):
     major = Column(String(80))
     email = Column(String(80), unique = True)
     phonenumb = Column(String(25), unique = True)
+    jobpos = Column(String(100), nullable = True)
     uni_id = Column(Integer(), ForeignKey("uni.id"))
 
     def __repr__(self):

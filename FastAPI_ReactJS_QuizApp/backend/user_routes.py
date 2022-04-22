@@ -42,6 +42,7 @@ async def create_new_user(user:UserModel):
         - major:str
         - email:str
         - phonenumb:str
+        - jobpos:str
         - uni_id:int
     """
 
@@ -79,6 +80,7 @@ async def create_new_user(user:UserModel):
             major = user.major,
             email = user.email,
             phonenumb = user.phonenumb,
+            jobpos = user.jobpos,
             uni_id = user.uni_id
         )
       
@@ -91,6 +93,7 @@ async def create_new_user(user:UserModel):
             "major": new_user.major,
             "email": new_user.email,
             "phonenumb": new_user.phonenumb,
+            "jobpos": new_user.jobpos,
             "uni_id": new_user.uni_id,
             "id": new_user.id
         }
@@ -166,6 +169,7 @@ async def update_a_user(id:int, user:UserModel, Authorize:AuthJWT = Depends()):
         - major:str
         - email:str
         - phonenumb:str
+        - jobpos:str
         - uni_id:int
     """
     try:
@@ -188,6 +192,7 @@ async def update_a_user(id:int, user:UserModel, Authorize:AuthJWT = Depends()):
         "major": user_to_update.major,
         "email": user_to_update.email,
         "phonenumb": user_to_update.phonenumb,
+        "jobpos": user_to_update.jobpos,
         "uni_id": user_to_update.uni_id
     }
 

@@ -36,6 +36,7 @@ class UserModel(BaseModel):
     major:str
     email:str
     phonenumb:str
+    jobpos:str
     uni_id:Optional[int]
 
 class QuestionModel(BaseModel):
